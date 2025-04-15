@@ -11,9 +11,11 @@
 Проект состоит из следующих пакетов:
 1. `src`:
 -`product.py`
+-`category.py`
 
 2. `tests`:
 - `test_product.py`
+- `test_category`
 
  Модуля:`main.py`
 
