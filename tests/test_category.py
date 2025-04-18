@@ -54,3 +54,12 @@ def test_products_property_output():
     category = Category("Электроника", "Полезные устройства", [product])
     expected = "Смарт-часы, 12000 руб. Остаток: 7 шт."
     assert category.products == expected
+
+
+def test_add_product_successful(sample_category, sample_product):
+    """Проверяет успешное добавление продукта в категорию."""
+    initial_product_count = Category.product_count
+    sample_category.add_product(sample_product)
+    assert len(sample_category.get_products()) == 1
+    assert sample_category.get_products()[0] is sample_product  # Проверяем, что это тот же самый продукт
+    assert Category.product_count == initial_product_count + 1

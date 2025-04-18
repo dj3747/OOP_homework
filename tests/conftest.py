@@ -30,3 +30,13 @@ def first_category():
 @pytest.fixture
 def confirmation_input(monkeypatch):
     monkeypatch.setattr("builtins.input", lambda _: "y")
+
+
+@pytest.fixture
+def sample_category():
+    return Category("Test Category", "Test Description", [])
+
+
+@pytest.fixture
+def sample_product():
+    return Product("Test Product", "Test Description", 100.0, 10)
