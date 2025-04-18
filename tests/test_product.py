@@ -1,4 +1,3 @@
-from tests.conftest import first_product
 from src.product import Product
 
 
@@ -21,21 +20,25 @@ def test_price_setter_positive(first_product, confirmation_input):
     first_product.price = 150000
     assert first_product.price == 150000
 
+
 # Тесты для проверки попытки установки отрицательной цены
 def test_price_setter_negative(first_product, monkeypatch):
     monkeypatch.setattr("builtins.input", lambda _: "n")
     first_product.price = -5000
     assert first_product.price == 180000  # Цена не должна измениться
 
+
 # Тесты для проверки попытки установки нулевой цены
 def test_price_setter_zero(first_product):
     first_product.price = 0
     assert first_product.price == 180000  # Цена не должна измениться
 
+
 # Тесты для проверки установки более низкой цены с подтверждением
 def test_price_setter_lower_confirmed(first_product, confirmation_input):
     first_product.price = 160000  # Новая цена
     assert first_product.price == 160000
+
 
 # Понижение цены при отказе пользователя
 def test_price_setter_lower_rejected(first_product, monkeypatch):
@@ -43,7 +46,9 @@ def test_price_setter_lower_rejected(first_product, monkeypatch):
     first_product.price = 100000
     assert first_product.price == 180000
 
+
 # Уже существующий товар обновляется
+
 
 def test_new_product_existing():
     existing = [Product("iPhone 15 Pro", "512GB Titanium", 199999, 2)]

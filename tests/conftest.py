@@ -25,6 +25,7 @@ def first_category():
         products=[product4],
     )
 
+
 # Фикстура для подтверждения ввода
 @pytest.fixture
 def confirmation_input(monkeypatch):

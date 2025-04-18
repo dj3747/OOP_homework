@@ -10,7 +10,6 @@ class Product:
         self.__price = price
         self.quantity = quantity
 
-
     @classmethod
     def new_product(cls, product_dict: dict, existing_products: list):
         """Создаёт новый товар или обновляет существующий"""

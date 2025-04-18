@@ -41,11 +41,13 @@ def test_category_and_product_count(first_category):
     assert Category.category_count == 2
     assert Category.product_count == 3
 
+
 def test_empty_category():
     category = Category("Книги", "Для саморазвития", [])
     assert category.name == "Книги"
     assert category.description == "Для саморазвития"
     assert category.get_products() == []
+
 
 def test_products_property_output():
     product = Product("Смарт-часы", "AMOLED экран, датчик пульса", 12000, 7)
