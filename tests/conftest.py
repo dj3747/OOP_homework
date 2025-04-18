@@ -24,3 +24,8 @@ def first_category():
         "который позволяет наслаждаться просмотром, станет вашим другом и помощником",
         products=[product4],
     )
+
+# Фикстура для подтверждения ввода
+@pytest.fixture
+def confirmation_input(monkeypatch):
+    monkeypatch.setattr("builtins.input", lambda _: "y")
