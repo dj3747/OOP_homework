@@ -12,6 +12,11 @@ def first_product():
 
 
 @pytest.fixture
+def second_product():
+    return Product(name="Iphone 15", description="512GB, Gray space", price=210000.0, quantity=8)
+
+
+@pytest.fixture
 def first_category():
     Category.category_count = 0  # Сбросить значение переменной класса перед тестами
     Category.product_count = 0

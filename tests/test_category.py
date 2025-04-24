@@ -63,3 +63,16 @@ def test_add_product_successful(sample_category, sample_product):
     assert len(sample_category.get_products()) == 1
     assert sample_category.get_products()[0] is sample_product  # Проверяем, что это тот же самый продукт
     assert Category.product_count == initial_product_count + 1
+
+
+def test_category_str_representation():
+    """Проверяет строковое представление категории."""
+    product1 = Product("Samsung Galaxy C23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
+    product2 = Product("Iphone 15", "512GB, Gray space", 210000.0, 8)
+    category = Category(
+        "Смартфоны",
+        "Смартфоны, как средство не только коммуникации, но и получение дополнительных функций для удобства жизни",
+        [product1, product2],
+    )
+    expected_string = "Смартфоны, количество продуктов: 13 шт."
+    assert str(category) == expected_string

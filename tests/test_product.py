@@ -56,3 +56,8 @@ def test_new_product_existing():
     updated = Product.new_product(data, existing)
     assert updated.quantity == 3
     assert updated.price == 199999
+
+
+# Тест для проверки сложения продуктов
+def test_product_addition(first_product, second_product):
+    assert first_product + second_product == 2580000.0  # 180000.0 * 5 + 210000.0 *8 =2580000
