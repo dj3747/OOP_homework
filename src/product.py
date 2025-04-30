@@ -50,9 +50,19 @@ class Product:
         else:
             self.__price = value
 
+
 class Smartphone(Product):
-    def __init__(self, name: str, description: str, price: float, quantity: int,
-                efficiency: str, model: str, memory: int, color: str):
+    def __init__(
+        self,
+        name: str,
+        description: str,
+        price: float,
+        quantity: int,
+        efficiency: float,
+        model: str,
+        memory: int,
+        color: str,
+    ):
         super().__init__(name, description, price, quantity)
         self.efficiency = efficiency
         self.model = model
@@ -60,37 +70,51 @@ class Smartphone(Product):
         self.color = color
 
     def __str__(self):
-        return  (f"{self.name}, Модель: {self.model}, Память: {self.memory}GB, Производительность: {self.efficiency},"
-                 f" Цвет: {self.color}, Цена: {self.price} руб. Остаток: {self.quantity} шт.")
+        return (
+            f"{self.name}, Модель: {self.model}, Память: {self.memory}GB, Производительность: {self.efficiency},"
+            f"Цвет: {self.color}, Цена: {self.price} руб. Остаток: {self.quantity} шт."
+        )
 
     def __add__(self, other):
-        if type(self) is not type(other): # Используем type() для проверки типа объекта
+        if type(self) is not type(other):  # Используем type() для проверки типа объекта
             raise TypeError("Складывать можно только объекты класса Smartphone")
         return super().__add__(other)
 
+
 class LawnGrass(Product):
-    def __init__(self, name: str, description: str, price: float, quantity: int,
-                country: str, germination_period: int, color: str):
+    def __init__(
+        self,
+        name: str,
+        description: str,
+        price: float,
+        quantity: int,
+        country: str,
+        germination_period: int,
+        color: str,
+    ):
         super().__init__(name, description, price, quantity)
         self.country = country
         self.germination_period = germination_period
         self.color = color
 
     def __str__(self):
-        return (f"{self.name}, Страна: {self.country},"
-                f" Срок прорастания: {self.germination_period} дней, Цвет: {self.color}")
+        return (
+            f"{self.name}, Страна: {self.country},"
+            f" Срок прорастания: {self.germination_period} дней, Цвет: {self.color}"
+        )
 
     def __add__(self, other):
-        if type(self) is not type(other): # Используем type() для проверки типа объекта
+        if type(self) is not type(other):  # Используем type() для проверки типа объекта
             raise TypeError("Складывать можно только объекты класса LawnGrass")
         return super().__add__(other)
+
 
 class ProductCategory:
     def __int__(self):
         self.products = []
 
     def add_products(self, product):
-        if not isinstance(product, Product): # Проверка через isinstance
+        if not isinstance(product, Product):  # Проверка через isinstance
             raise TypeError("Можно добавлять объекты только класса Product и его наследников")
         self.products.append(product)
 
