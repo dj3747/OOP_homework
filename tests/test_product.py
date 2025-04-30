@@ -86,7 +86,7 @@ def test_lawn_grass_creation(lawn_grass):
     assert lawn_grass.price == 500
     assert lawn_grass.quantity == 20
     assert lawn_grass.country == "Россия"
-    assert lawn_grass.germination_period == 7
+    assert lawn_grass.germination_period == "7 дней"
     assert lawn_grass.color == "Зеленый"
 
 

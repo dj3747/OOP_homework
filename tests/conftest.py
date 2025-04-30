@@ -69,7 +69,7 @@ def lawn_grass():
         price=500,
         quantity=20,
         country="Россия",
-        germination_period=7,
+        germination_period="7 дней",
         color="Зеленый",
     )
 
