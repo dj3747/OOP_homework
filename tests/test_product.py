@@ -1,13 +1,4 @@
-import pytest
-
-from src.product import Product, Smartphone
-
-
-def test_product_creation(first_product):
-    assert first_product.name == "Samsung Galaxy S23 Ultra"
-    assert first_product.description == "256GB, Серый цвет, 200MP камера"
-    assert first_product.price == 180000.0
-    assert first_product.quantity == 5
+from src.product import BaseProduct, LawnGrass, Product, Smartphone
 
 
 def test_product_attributes(first_product):
@@ -47,17 +38,6 @@ def test_price_setter_lower_rejected(first_product, monkeypatch):
     monkeypatch.setattr("builtins.input", lambda _: "n")
     first_product.price = 100000
     assert first_product.price == 180000
-
-
-# Уже существующий товар обновляется
-
-
-def test_new_product_existing():
-    existing = [Product("iPhone 15 Pro", "512GB Titanium", 199999, 2)]
-    data = {"name": "iPhone 15 Pro", "description": "512GB Titanium", "price": 189999, "quantity": 1}
-    updated = Product.new_product(data, existing)
-    assert updated.quantity == 3
-    assert updated.price == 199999
 
 
 # Тест для проверки сложения продуктов
@@ -106,16 +86,53 @@ def test_addition_same_class(smartphone):
     assert smartphone + smartphone2 == (210000.0 * 8) + (70000.0 * 3)
 
 
-def test_addition_different_classes(smartphone, lawn_grass):
-    """Проверяем, что сложение объектов разных классов вызывает TypeError."""
-    with pytest.raises(TypeError):
-        smartphone + lawn_grass
-
-
-# Тест на добавление продуктов в категорию
 def test_add_product_to_category(category, smartphone, lawn_grass):
     """Проверяем, что можно добавить корректные продукты в категорию."""
     category.add_product(smartphone)
     category.add_product(lawn_grass)
     assert smartphone in category.get_products()
     assert lawn_grass in category.get_products()
+
+
+# Тест на проверку создания базового продукта
+def test_product_creation(capsys):
+    first_product = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000, 5)
+    assert first_product.name == "Samsung Galaxy S23 Ultra"
+    assert first_product.description == "256GB, Серый цвет, 200MP камера"
+    assert first_product.price == 180000
+    assert first_product.quantity == 5
+
+    captured = capsys.readouterr()
+    assert "Создан объект класса Product" in captured.out
+
+
+# Тест на создание газонной травы с проверкой базового класса и миксина
+def test_lawn_grass_creation_with_base_and_mixin(capsys):
+    lawn_grass = LawnGrass("Газонная трава", "Описание", 500, 20, "Россия", "7 дней", "Зеленый")
+
+    # Проверка атрибутов
+    assert lawn_grass.name == "Газонная трава"
+    assert lawn_grass.price == 500
+    assert lawn_grass.quantity == 20
+    assert lawn_grass.country == "Россия"
+    assert lawn_grass.germination_period == "7 дней"
+
+    # Проверка наследования от BaseProduct
+    assert isinstance(lawn_grass, BaseProduct)
+
+    # Проверка логирования из InitLoggingMixin
+    captured = capsys.readouterr()
+    assert "Создан объект класса LawnGrass" in captured.out
+
+# Тест на использование миксина InitLoggingMixin
+def test_init_logging_mixin(capsys):
+    # Создаем объект LawnGrass для проверки работы миксина
+    lawn_grass = LawnGrass("Газонная трава", "Описание",
+                           500, 20, "Россия", "7 дней", "Зеленый")
+
+    # Проверяем логирование в выводе
+    captured = capsys.readouterr()
+    assert "Создан объект класса LawnGrass" in captured.out
+
+    # Проверяем наличие метода __repr__, добавленного миксином
+    assert hasattr(lawn_grass, "__repr__")

@@ -1,35 +1,13 @@
-class Product:
-    name: str
-    description: str
-    __price: float  # Приватный атрибут
-    quantity: int
+from abc import ABC, abstractmethod
 
+
+# Базовый абстрактный класс
+class BaseProduct(ABC):
     def __init__(self, name: str, description: str, price: float, quantity: int) -> None:
         self.name = name
         self.description = description
         self.__price = price
         self.quantity = quantity
-
-    def __str__(self):
-        return f"{self.name}, {self.__price} руб. Остаток: {self.quantity} шт."
-
-    def __add__(self, other):
-        if not isinstance(other, Product):
-            raise TypeError("Можно складывать только объекты класса Product")
-        return self.price * self.quantity + other.price * other.quantity
-
-    @classmethod
-    def new_product(cls, product_dict: dict, existing_products: list):
-        """Создаёт новый товар или обновляет существующий"""
-        for product in existing_products:
-            if product.name == product_dict["name"]:
-                # Обновляем количество товара и выбираем более высокую цену
-                product.quantity += product_dict["quantity"]
-                product.price = max(product.price, max(0, product_dict["price"]))  # Учитываем отрицательную цену
-                return product
-
-        # Создаем новый товар, если такого еще нет
-        return cls(**product_dict)  # Используем ** для распаковки словаря
 
     @property
     def price(self):
@@ -49,6 +27,39 @@ class Product:
                 print("Изменение цены отменено")
         else:
             self.__price = value
+
+    @abstractmethod
+    def __str__(self):
+        pass
+
+    @abstractmethod
+    def calculate_total_price(self):
+        pass
+
+
+# Миксин для логирования создания объектов
+class InitLoggingMixin:
+    def __init__(self, *args, **kwargs):
+        class_name = self.__class__.__name__
+        print(f"Создан объект класса {class_name} c аргументами: {args}, {kwargs}")
+        super().__init__(*args, **kwargs)
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}({self.__dict__})"
+
+
+# Класс продуктов с миксином
+class Product(InitLoggingMixin, BaseProduct):
+    def calculate_total_price(self):
+        return self.price * self.quantity
+
+    def __str__(self):
+        return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
+
+    def __add__(self, other):
+        if not isinstance(other, Product):
+            raise TypeError("Можно складывать только объекты класса Product")
+        return self.price * self.quantity + other.price * other.quantity
 
 
 class Smartphone(Product):
