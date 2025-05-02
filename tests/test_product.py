@@ -1,4 +1,6 @@
-from src.product import Product
+import pytest
+
+from src.product import Product, Smartphone
 
 
 def test_product_creation(first_product):
@@ -61,3 +63,59 @@ def test_new_product_existing():
 # Тест для проверки сложения продуктов
 def test_product_addition(first_product, second_product):
     assert first_product + second_product == 2580000.0  # 180000.0 * 5 + 210000.0 *8 =2580000
+
+
+# Тест на создание смартфона
+def test_smartphone_creation(smartphone):
+    """Проверяем, что объект смартфона создаётся с правильными атрибутами."""
+    assert smartphone.name == "Iphone 15"
+    assert smartphone.description == "512GB, Gray space"
+    assert smartphone.price == 210000.0
+    assert smartphone.quantity == 8
+    assert smartphone.efficiency == 98.2
+    assert smartphone.model == "15"
+    assert smartphone.memory == 512
+    assert smartphone.color == "Gray space"
+
+
+# Тест на создание газонной травы
+def test_lawn_grass_creation(lawn_grass):
+    """Проверяем, что объект газонной травы создаётся с правильными атрибутами."""
+    assert lawn_grass.name == "Газонная трава"
+    assert lawn_grass.description == "Элитная трава для газона"
+    assert lawn_grass.price == 500
+    assert lawn_grass.quantity == 20
+    assert lawn_grass.country == "Россия"
+    assert lawn_grass.germination_period == "7 дней"
+    assert lawn_grass.color == "Зеленый"
+
+
+# Тест на сложение объектов одного класса (например, смартфонов)
+def test_addition_same_class(smartphone):
+    """Проверяем сложение двух объектов класса Smartphone."""
+    smartphone2 = Smartphone(
+        name="Samsung Galaxy S22",
+        description="256GB, Черный",
+        price=70000,
+        quantity=3,
+        efficiency=90.0,
+        model="S22",
+        memory=256,
+        color="Черный",
+    )
+    assert smartphone + smartphone2 == (210000.0 * 8) + (70000.0 * 3)
+
+
+def test_addition_different_classes(smartphone, lawn_grass):
+    """Проверяем, что сложение объектов разных классов вызывает TypeError."""
+    with pytest.raises(TypeError):
+        smartphone + lawn_grass
+
+
+# Тест на добавление продуктов в категорию
+def test_add_product_to_category(category, smartphone, lawn_grass):
+    """Проверяем, что можно добавить корректные продукты в категорию."""
+    category.add_product(smartphone)
+    category.add_product(lawn_grass)
+    assert smartphone in category.get_products()
+    assert lawn_grass in category.get_products()
