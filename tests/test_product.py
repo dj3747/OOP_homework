@@ -1,3 +1,5 @@
+import pytest
+
 from src.product import BaseProduct, LawnGrass, Product, Smartphone
 
 
@@ -136,3 +138,8 @@ def test_init_logging_mixin(capsys):
 
     # Проверяем наличие метода __repr__, добавленного миксином
     assert hasattr(lawn_grass, "__repr__")
+
+# Тест на попытку создать товар с нулевым количеством
+def test_product_with_zero_quantity():
+    with pytest.raises(ValueError, match="Товар с нулевым количеством не может быть добавлен"):
+        Product("Test Product", "Описание", 1500.0, 0)
