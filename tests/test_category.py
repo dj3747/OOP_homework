@@ -77,6 +77,7 @@ def test_category_str_representation():
     expected_string = "Смартфоны, количество продуктов: 13 шт."
     assert str(category) == expected_string
 
+
 def test_middle_price():
     """Проверка вычисления среднего ценника в категории"""
     category = Category("Электроника", "Различные гаджеты", [])
@@ -85,8 +86,8 @@ def test_middle_price():
     assert category.middle_price() == 0
 
     # Добавляем товары
-    product1 = Product("Товар 1","Описание 1", 100.0, 5)
-    product2 = Product("Товар 2","Описание 2", 200.0, 3)
+    product1 = Product("Товар 1", "Описание 1", 100.0, 5)
+    product2 = Product("Товар 2", "Описание 2", 200.0, 3)
 
     category.add_product(product1)
     category.add_product(product2)

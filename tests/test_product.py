@@ -126,11 +126,11 @@ def test_lawn_grass_creation_with_base_and_mixin(capsys):
     captured = capsys.readouterr()
     assert "Создан объект класса LawnGrass" in captured.out
 
+
 # Тест на использование миксина InitLoggingMixin
 def test_init_logging_mixin(capsys):
     # Создаем объект LawnGrass для проверки работы миксина
-    lawn_grass = LawnGrass("Газонная трава", "Описание",
-                           500, 20, "Россия", "7 дней", "Зеленый")
+    lawn_grass = LawnGrass("Газонная трава", "Описание", 500, 20, "Россия", "7 дней", "Зеленый")
 
     # Проверяем логирование в выводе
     captured = capsys.readouterr()
@@ -138,6 +138,7 @@ def test_init_logging_mixin(capsys):
 
     # Проверяем наличие метода __repr__, добавленного миксином
     assert hasattr(lawn_grass, "__repr__")
+
 
 # Тест на попытку создать товар с нулевым количеством
 def test_product_with_zero_quantity():
