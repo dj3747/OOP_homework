@@ -30,6 +30,14 @@ class Category:
     def get_products(self) -> list:
         return self.__products
 
+    def middle_price(self):  # Метод для средней цены
+        try:
+            total_price = sum(product.price for product in self.__products)
+            total_products = len(self.__products)
+            return total_price / total_products
+        except ZeroDivisionError:
+            return 0  # Если товаров нет, возвращаем 0 вместо ошибки
+
     def __str__(self):
         total_quantity = sum(p.quantity for p in self.__products)
         return f"{self.name}, количество продуктов: {total_quantity} шт."
